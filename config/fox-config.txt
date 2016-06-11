@@ -1,0 +1,1 @@
+#config for compiler and mostly llvm and compiler
