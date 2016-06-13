@@ -22,7 +22,7 @@ enum cmd {
 
 class core {
   int eax, ebx, ecx, edx; //cannot be printable
-  int esx, epx //for scans and prints
+  int esx, epx; //for scans and prints
   char *RAM; //allocatible memory
   uint_t memptr; //alloc pointer
   stack <int> local;
