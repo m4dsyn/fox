@@ -19,7 +19,8 @@ core :: core (const core& src) {
 
 }
 
-uint16_t core :: falloc (uint16_t size = 4, char c = 0) {
+inline uint16_t
+core :: falloc (uint16_t size = 4, char c = 0) {
   if (memptr + size >= RAM_MAX) return 0;
 
   memptr += size;
@@ -27,6 +28,26 @@ uint16_t core :: falloc (uint16_t size = 4, char c = 0) {
 
 }
 
+inline int
+core :: feed (cmd opc, ...) {
+  switch (opc) {
+
+    case print: {
+      printf ("%d", epx);
+      break;
+    }
+
+    case scan: {
+      scanf ("%d", &esx);
+      break;
+    }
+
+    case mov: {
+      if ()
+    }
+
+  }
+}
 
 
 #undef int
