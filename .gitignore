@@ -1,0 +1,11 @@
+# linux
+*.out
+
+# windows
+*.exe
+
+# unified
+*.o
+*.save
+*.bak
+*.save.1
