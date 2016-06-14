@@ -253,8 +253,8 @@ void awoke(int signal) {
                 fprintf(dump_file, "\nDump of registers.\n");
                 fprintf(dump_file, "EAX = %d; EBX = %d; ECX = %d; EDX = %d; EIP = %d; ESP = %d.\n", reg[EAX], reg[EBX], reg[ECX], reg[EDX], reg[EIP], reg[ESP]);
                 fprintf(dump_file, "Flags:\n");
-                fprintf(dump_file, "CF %d; PF %d; AF %d; ZF %d; SF %d; TF %d.\n", bool(eflags & !CF), bool(eflags & !PF), bool(eflags & !AF), bool(eflags & !ZF), bool(eflags & !SF), bool(eflags & !TF));
-                fprintf(dump_file, "IF %d; DF %d; OF %d; IOPL %d; NT %d.", bool(eflags & !IF), bool(eflags & !DF), bool(eflags & !OF), bool(eflags & !IOPL), bool(eflags & !NT));
+                fprintf(dump_file, "CF %1d; PF %1d; AF %1d; ZF   %1d; SF %1d; TF %1d.\n", bool(eflags & !CF), bool(eflags & !PF), bool(eflags & !AF), bool(eflags & !ZF), bool(eflags & !SF), bool(eflags & !TF));
+                fprintf(dump_file, "IF %1d; DF %1d; OF %1d; IOPL %1d; NT %1d.", bool(eflags & !IF), bool(eflags & !DF), bool(eflags & !OF), bool(eflags & !IOPL), bool(eflags & !NT));
                 puts("\nDump is automatically saved into file 'dump.txt'.");
                 fclose(dump_file);
             }
