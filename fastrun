@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./asm $1 ./temp.txt
+./proc ./temp.txt
+rm ./temp.txt

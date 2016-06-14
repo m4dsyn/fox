@@ -1,0 +1,18 @@
+## Don't write this way ##
+print 24
+read 25
+mOv eax 25
+## Coments won't compile ##
+print eax
+awoke SIGusr
+## You shouldn't have anything
+except comment on the string ##
+cmp eax 25
+je 22
+Print 25
+jmp 22
+awoke SIGSEGV
+exIt 5
+
+1 2
+EOF
