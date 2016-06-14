@@ -231,8 +231,8 @@ void awoke(int signal) {
             puts("\nDump of registers.");
             printf("EAX = %d; EBX = %d; ECX = %d; EDX = %d; EIP = %d; ESP = %d.\n", reg[EAX], reg[EBX], reg[ECX], reg[EDX], reg[EIP], reg[ESP]);
             puts("Flags:");
-            printf("CF %d; PF %d; AF %d; ZF %d; SF %d; TF %d.\n", bool(eflags & !CF), bool(eflags & !PF), bool(eflags & !AF), bool(eflags & !ZF), bool(eflags & !SF), bool(eflags & !TF));
-            printf("IF %d; DF %d; OF %d; IOPL %d; NT %d.", bool(eflags & !IF), bool(eflags & !DF), bool(eflags & !OF), bool(eflags & !IOPL), bool(eflags & !NT));
+            printf("CF %1d; PF %1d; AF %1d; ZF   %1d; SF %1d; TF %1d.\n", bool(eflags & !CF), bool(eflags & !PF), bool(eflags & !AF), bool(eflags & !ZF), bool(eflags & !SF), bool(eflags & !TF));
+            printf("IF %1d; DF %1d; OF %1d; IOPL %1d; NT %1d.", bool(eflags & !IF), bool(eflags & !DF), bool(eflags & !OF), bool(eflags & !IOPL), bool(eflags & !NT));
 
             if ((dump_file = fopen("dump.txt", "w")) < 0) {
                 puts("Cannot create dump file.");
