@@ -1,22 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-
-const int COMAND_NUM = 13,
-           KEYWORD_NUM = 9,
-           MAX_STR_SIZE = 100,
-
-           PROG_EOF = 0,
-
-           SIGINT = 0,
-           SIGSEGV = 1,
-           SIGFPE  = 2,
-           SIGUSR  = 3;
-
-const char *name[COMAND_NUM] = {"eof", "end", "exit", "mov", "cmp", "jmp", "je", "set", "print", "read", "push", "pop", "awoke"};
-const char *keyword[KEYWORD_NUM]    = {"eax", "ebx", "ecx", "edx", "eip", "sigint", "sigsegv", "sigfpe", "sigusr"};
-const int keyword_name[KEYWORD_NUM] = {-1,    -2,    -3,    -4,    -5,    SIGINT,   SIGSEGV,   SIGFPE,   SIGUSR};
+#include "defines.h"
 
 void IgnoreRegister(char temp[]);
 
@@ -40,10 +22,10 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    printf("Assembling code... ");
+    puts("Assembling code... ");
     fscanf(fileptr, "%s", temp);
     IgnoreRegister(temp);
-    for (i = 0; strcmp(temp, name[PROG_EOF]) != 0; i++) {
+    for (i = 0; strcmp(temp, name[PROG_EOF]) != 0 && temp[0] != EOF && i < MEMORY_SIZE; i++) {
         if (temp[0] == '#' && temp[1] == '#') {
             temp[1] = '-';
             while (1) {
@@ -59,7 +41,10 @@ int main(int argc, char **argv) {
             IgnoreRegister(temp);
         }
         if (isdigit(temp[0]) || temp[0] == '-') {
-            fprintf(fileptr2, "%c", char(atoi(temp)));
+            if (temp[0] != '-')
+                AsmNum(fileptr2, atoi(temp));
+            else
+                fprintf(fileptr2, "%c", atoi(temp));
             fscanf(fileptr, "%s", temp);
             IgnoreRegister(temp);
             continue;
@@ -73,19 +58,39 @@ int main(int argc, char **argv) {
         if (j >= COMAND_NUM) {
             for (j = 0; j < KEYWORD_NUM; j++)
                 if (strcmp(temp, keyword[j]) == 0) {
-                    fprintf(fileptr2, "%c", keyword_name[j]);
+                    if (keyword_name[j] < 0)
+                        fprintf(fileptr2, "%c", keyword_name[j]);
+                    else
+                        AsmNum(fileptr2, keyword_name[j]);
                     break;
                 }
             if (j >= KEYWORD_NUM) {
-                printf("Unknon identificator \'%s\'. Ignoring.\n", temp);
-                fprintf(fileptr2, "%s", temp);
+                for (j = 0; j < SIG_NUM; j++)
+                    if (strcmp(temp, SIG[j].name) == 0) {
+                        AsmNum(fileptr2, j);
+                        break;
+                    }
+                if (j >= SIG_NUM) {
+                    for (j = 0; j < INT_NUM; j++)
+                        if (INT[j].name != NULL && strcmp(temp, INT[j].name) == 0) {
+                            AsmNum(fileptr2, j);
+                            break;
+                        }
+                    if (j >= INT_NUM) {
+                        printf("Unknon identificator \'%s\'. Ignoring.\n", temp);
+                        fprintf(fileptr2, "%s", temp);
+                    }
+                }
             }
         }
         fscanf(fileptr, "%s", temp);
         IgnoreRegister(temp);
     }
-    fprintf(fileptr2, "%c", 0);
-    puts("Finished.");
+    fprintf(fileptr2, "%c", EOF);
+    if (i < MEMORY_SIZE)
+        puts("Finished.");
+    else
+        puts("Too big program. Memory overflow.");
 
     fclose(fileptr);
     fclose(fileptr2);

@@ -5,9 +5,11 @@ CopyLeft
 You can easily use make to compile this program
 
 --Working--
-When you have an asm file you should enter this comands:
+When you have an asm file and want to execute it you should enter this comands:
 ./asm your_file_path executing_file_path
 ./proc executing_file_path
 Also you can type './fastrun your_file_path'.
+To disassemble executing file you should type:
+./disasm executing_file_path file_path_for_result
 
-Good luck.
+Good luck!
