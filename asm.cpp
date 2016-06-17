@@ -72,7 +72,7 @@ int main(int argc, char **argv) {
                     }
                 if (j >= SIG_NUM) {
                     for (j = 0; j < INT_NUM; j++)
-                        if (INT[j].name != NULL && strcmp(temp, INT[j].name) == 0) {
+                        if (INT_LIST[j].name != NULL && strcmp(temp, INT_LIST[j].name) == 0) {
                             AsmNum(fileptr2, j);
                             break;
                         }

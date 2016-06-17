@@ -53,6 +53,14 @@ int main(int argc, char **argv) {
             case SET:
             case PRINT:
             case READ:
+            case PUSH:
+            case POP:
+                fprintf(fileptr2, "\n%s ", name[memory[reg[EIP]]]);
+                DisAsmNum(fileptr2, GetNum(reg[EIP] + 1));
+                if (GetNum(reg[EIP] + 1, 0) < -1)
+                    EIP_STEP++;
+                break;
+            case INT:
             case AWOKE:
                 fprintf(fileptr2, "\n%s ", name[memory[reg[EIP]]]);
                 DisAsmNum(fileptr2, GetNum(reg[EIP] + 1));

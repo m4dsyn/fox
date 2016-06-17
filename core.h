@@ -3,7 +3,7 @@ class Interruption {
     const char *name;
     const char *message;
     bool if_show_message;
-    void *handler(int int_num);
+    void (*handler)(int int_num);
 };
 
 const int INT_NUM         = 35,
@@ -52,6 +52,7 @@ int Pop(void) {
 }
 
 void Int(int int_num) {
+    void (*handler)(int);
     if (INT_LIST[int_num].name == NULL) {
         printf("Unknown interruption %d. Ignored.", int_num);
         awoke(SIGWARN);
@@ -59,7 +60,8 @@ void Int(int int_num) {
     }
     if (INT_LIST[int_num].if_show_message)
         printf("Interruption %s (%d): %s", INT_LIST[int_num].name, int_num, INT_LIST[int_num].message);
-    (*(INT_LIST[int_num].handler))(int_num);
+    handler = INT_LIST[int_num].handler;
+    (*handler)(int_num);
 }
 
 void Int_handle(int int_num) {
